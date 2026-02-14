@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exoplanet Habitability Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+<div class="container">
+<h1>Exoplanet Habitability Prediction</h1>
+
+<form method="POST">
+    <input name="pl_rade" placeholder="Planet Radius" required><br>
+    <input name="pl_bmasse" placeholder="Planet Mass" required><br>
+    <input name="pl_dens" placeholder="Planet Density" required><br>
+    <input name="pl_eqt" placeholder="Equilibrium Temperature" required><br>
+    <input name="pl_orbper" placeholder="Orbital Period" required><br>
+    <input name="sy_dist" placeholder="System Distance" required><br>
+    <input name="st_lum" placeholder="Star Luminosity" required><br>
+    <input name="st_teff" placeholder="Star Temperature (scaled)" required><br>
+    <input name="st_met" placeholder="Star Metallicity" required><br>
+    <input name="st_spectral_score" placeholder="Spectral Score" required><br>
+
+    <button type="submit">Predict</button>
+
+    <br><br>
+<a href="/dashboard">View Dashboard</a><br>
+<a href="/export_pdf">Download PDF Report</a><br>
+
+</form>
+
+{% if result %}
+<hr>
+<h3>Prediction Result:</h3>
+<p><strong>Class:</strong> {{ result }}</p>
+<p><strong>Final Habitability Score:</strong> {{ score }}</p>
+{% endif %}
+
+{% if rankings %}
+<hr>
+<h3>🏆 Top 2 Ranked Planets</h3>
+
+<ol>
+    {% for planet in rankings %}
+        <li>
+            <strong>{{ planet.name }}</strong> —
+            Score: {{ planet.score }} —
+            {{ planet.class }}
+        </li>
+    {% endfor %}
+</ol>
+{% endif %}
+
+
+</div>
+</body>
+</html>
